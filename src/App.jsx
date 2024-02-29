@@ -1,44 +1,38 @@
-import { useState } from 'react'
-import {puppyList} from './data.js'
+import { useState } from 'react';
+import { puppyList } from './data.js';
+
 function App() {
   const [puppies, setPuppies] = useState(puppyList);
   const [featPupId, setFeatPupId] = useState(null);
-  {()=>{console.log("puppy id: ", puppy.id)}}
-  const featuredPup = puppies.find((pup)=> pup.id === featPupId);
-  console.log(featuredPup);
-  function handleClick() {
-    // some logic here
-  }
+
+  // Function to handle click event
+  const handleClick = (puppyId) => {
+    setFeatPupId(puppyId);
+  };
+
+  // Find the featured puppy based on featPupId
+  const featuredPup = puppies.find((pup) => pup.id === featPupId);
 
   return (
-    
     <div className="App">
-      {puppies.map((puppy) => {
-        return (
-          <p onClick={handleClick} key={puppy.id}>
-            {puppy.name}
-          </p>
-        );
-        { featuPupID && <p>{ featPupId }</p> } 
-      })}
+      {puppies.map((puppy) => (
+        <p onClick={() => handleClick(puppy.id)} key={puppy.id}>
+          {puppy.name}
+        </p>
+      ))}
+
+      {/* Conditionally render the selected puppy's details */}
+      {featPupId && featuredPup && (
+        <div>
+          <h2>{featuredPup.name}</h2>
+          <ul>
+            <li>Age: {featuredPup.age}</li>
+            <li>Email: {featuredPup.email}</li>
+          </ul>
+        </div>
+      )}
     </div>
-    
-    
-    
   );
-  return(
-    
-  <div>
-  {featPupId ?
-    <div>
-      <h2>{featuredPup.name}</h2>
-      <ul>
-        <li>Age: {featuredPup.age}</li>
-        <li>Email: {featuredPup.email}</li>
-      </ul>
-    </div> : <p>Hi!</p>
-  } </div>
-  )
 }
 
-export default App
+export default App;
